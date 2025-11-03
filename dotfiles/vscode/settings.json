@@ -220,5 +220,6 @@
   "zig.zls.enabled": "on",
   // brew install glslang
   // which glslangValidator
-  "glslangValidatorPath": "/opt/homebrew/bin/glslangValidator"
+  "glslangValidatorPath": "/opt/homebrew/bin/glslangValidator",
+  "github.copilot.nextEditSuggestions.enabled": true
 }
