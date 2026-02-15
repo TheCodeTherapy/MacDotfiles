@@ -42,6 +42,7 @@ link_dotfiles() {
   vscode_config_dir="$HOME/Library/Application Support/Code/User"
   cursor_config_dir="$HOME/Library/Application Support/Cursor/User"
   ghostty_config_dir="$HOME/Library/Application Support/com.mitchellh.ghostty"
+  hammerspoon_config_dir="$HOME/.hammerspoon"
   global_config_dir="$HOME/.config"
 
   mkdir -p "$vscode_config_dir"
@@ -57,11 +58,12 @@ link_dotfiles() {
     "$DOTDOT/alacritty/alacritty.toml" "$dot_config_dir/alacritty/alacritty.toml"
     "$DOTDOT/ghostty/config" "$ghostty_config_dir/config"
     "$DOTDOT/ghostty/shaders" "$ghostty_config_dir/shaders"
-    "$DOTDOT/ghostty/themes" "$ghostty_config_dir/$global_config_dir/ghostty/themes"
+    "$DOTDOT/ghostty/themes" "$ghostty_config_dir/themes"
     "$DOTDOT/profile/profile" "$HOME/.profile"
     "$DOTDOT/zsh/zshrc" "$HOME/.zshrc"
     "$DOTDOT/profile/zprofile" "$HOME/.zprofile"
     "$DOTDOT/keybindings/DefaultKeyBinding.dict" "$HOME/Library/KeyBindings/DefaultKeyBinding.dict"
+    "$DOTDOT/hammerspoon" "$hammerspoon_config_dir"
   )
 
   local i=0
