@@ -114,9 +114,38 @@ config_nginx() {
   fi
 }
 
+install_urblind() {
+  if [[ -f "$DOTDIR/bin/urblind" ]]; then
+    rm "$DOTDIR/bin/urblind" || {
+      echo "Failed to remove existing urblind binary"
+      exit 1
+    }
+  fi
+  echo "Building urblind..."
+  cd "$DOTDIR/tools/urblind" || {
+    echo "Failed to change directory to $DOTDIR/tools/urblind"
+    exit 1
+  }
+  ./build_posix.sh || {
+    echo "Failed to build urblind"
+    exit 1
+  }
+
+  cp "./build/urblind" "$DOTDIR/bin/" || {
+    echo "Failed to copy urblind to bin/"
+    exit 1
+  }
+
+  cd "$DOTDIR" || {
+    echo "Failed to change directory back to $DOTDIR"
+    exit 1
+  }
+}
+
 install_homebrew
 install_homebrew_packages
 fix_dock
 fix_key_repeat
 link_dotfiles
 config_nginx
+install_urblind
