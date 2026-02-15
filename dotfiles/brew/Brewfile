@@ -25,25 +25,23 @@ brew "zsh-autosuggestions"     # Fish-like autosuggestions for zsh
 brew "nvm"                     # Node Version Manager
 brew "glslang"                 # OpenGL/Vulkan shader compiler
 
-# NEW additions
-brew "act"                     # NEW - Run GitHub Actions locally
-brew "cloudflared"             # NEW - Cloudflare tunnel client
-brew "ffmpeg"                  # NEW - Video/audio processing tool
-brew "lazygit"                 # NEW - Terminal UI for git
-brew "nginx"                   # NEW - HTTP and reverse proxy server
-brew "pnpm"                    # NEW - Fast, disk space efficient package manager
-brew "tree-sitter"             # NEW - Parser generator and incremental parsing library
-brew "yarn"                    # NEW - JavaScript package manager
-brew "yt-dlp"                  # NEW - Download videos from YouTube and other sites
+brew "act"                     # Run GitHub Actions locally
+brew "cloudflared"             # Cloudflare tunnel client
+brew "ffmpeg"                  # Video/audio processing tool
+brew "lazygit"                 # Terminal UI for git
+brew "nginx"                   # HTTP and reverse proxy server
+brew "pnpm"                    # Fast, disk space efficient package manager
+brew "tree-sitter"             # Parser generator and incremental parsing library
+brew "yarn"                    # JavaScript package manager
+brew "yt-dlp"                  # Download videos from YouTube and other sites
 
 cask "vlc"                     # Media player
 cask "rar"                     # Archive manager
 
-# NEW casks
-cask "alacritty"               # NEW - GPU-accelerated terminal emulator
-cask "alt-tab"                 # NEW - Windows-style alt-tab for macOS
-cask "audacity"                # NEW - Audio editing software
-cask "bentobox"                # NEW - Window tiling/organizer
-cask "blackhole-2ch"           # NEW - Virtual audio driver (2 channels)
-cask "blackhole-16ch"          # NEW - Virtual audio driver (16 channels)
-cask "blackhole-64ch"          # NEW - Virtual audio driver (64 channels)
+cask "alacritty"               # GPU-accelerated terminal emulator
+cask "alt-tab"                 # Windows-style alt-tab for macOS
+cask "audacity"                # Audio editing software
+cask "bentobox"                # Window tiling/organizer
+cask "blackhole-2ch"           # Virtual audio driver (2 channels)
+cask "blackhole-16ch"          # Virtual audio driver (16 channels)
+cask "blackhole-64ch"          # Virtual audio driver (64 channels)
