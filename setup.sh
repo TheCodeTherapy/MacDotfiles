@@ -41,9 +41,12 @@ link_file() {
 link_dotfiles() {
   vscode_config_dir="$HOME/Library/Application Support/Code/User"
   cursor_config_dir="$HOME/Library/Application Support/Cursor/User"
+  ghostty_config_dir="$HOME/Library/Application Support/com.mitchellh.ghostty"
+  global_config_dir="$HOME/.config"
 
   mkdir -p "$vscode_config_dir"
   mkdir -p "$cursor_config_dir"
+  mkdir -p "$ghostty_config_dir"
 
   dot_config_dir="$HOME/.config"
 
@@ -52,6 +55,9 @@ link_dotfiles() {
     "$DOTDOT/cursor/settings.json" "$cursor_config_dir/settings.json"
     "$DOTDOT/nvim" "$dot_config_dir/nvim"
     "$DOTDOT/alacritty/alacritty.toml" "$dot_config_dir/alacritty/alacritty.toml"
+    "$DOTDOT/ghostty/config" "$ghostty_config_dir/config"
+    "$DOTDOT/ghostty/shaders" "$ghostty_config_dir/shaders"
+    "$DOTDOT/ghostty/themes" "$ghostty_config_dir/$global_config_dir/ghostty/themes"
     "$DOTDOT/profile/profile" "$HOME/.profile"
     "$DOTDOT/zsh/zshrc" "$HOME/.zshrc"
     "$DOTDOT/profile/zprofile" "$HOME/.zprofile"
