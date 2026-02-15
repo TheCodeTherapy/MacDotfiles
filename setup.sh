@@ -86,8 +86,29 @@ fix_key_repeat() {
   defaults write NSGlobalDomain InitialKeyRepeat -int 20
 }
 
+config_nginx() {
+  local nginx_conf="/opt/homebrew/etc/nginx/nginx.conf"
+  local backup_conf="/opt/homebrew/etc/nginx/nginx.conf.backup"
+  
+  # Backup original if it exists and no backup yet
+  if [ -f "$nginx_conf" ] && [ ! -f "$backup_conf" ]; then
+    echo "Backing up original nginx.conf..."
+    cp "$nginx_conf" "$backup_conf"
+  fi
+  
+  echo "Installing custom nginx config..."
+  cp "$DOTDOT/nginx/nginx.conf" "$nginx_conf"
+  
+  # Reload nginx if it's running
+  if pgrep nginx >/dev/null; then
+    echo "Reloading nginx..."
+    brew services restart nginx
+  fi
+}
+
 install_homebrew
 install_homebrew_packages
 fix_dock
 fix_key_repeat
 link_dotfiles
+config_nginx

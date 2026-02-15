@@ -1,29 +1,49 @@
-brew "wget"
-brew "cmake"
-brew "fd"
-brew "fzf"
-brew "bat"
-brew "eza"
-brew "ripgrep"
-brew "gh"
-brew "git-lfs"
-brew "dialog"
-brew "neovim"
-brew "pkg-config"
-brew "cairo"
-brew "pango"
-brew "libpng"
-brew "jpeg"
-brew "giflib"
-brew "librsvg"
-brew "pixman"
-brew "fastfetch"
-brew "tmux"
-brew "tree"
-brew "watch"
-brew "zsh-autosuggestions"
-brew "nvm"
-brew "glslang"
+brew "wget"                    # Download files from the web
+brew "cmake"                   # Cross-platform build system
+brew "fd"                      # Fast alternative to find
+brew "fzf"                     # Fuzzy finder for command line
+brew "bat"                     # Cat with syntax highlighting
+brew "eza"                     # Modern replacement for ls
+brew "ripgrep"                 # Fast text search tool
+brew "gh"                      # GitHub CLI
+brew "git-lfs"                 # Git Large File Storage
+brew "dialog"                  # Display dialog boxes from shell scripts
+brew "neovim"                  # Modern Vim-based text editor
+brew "pkg-config"              # Helper tool for compiling applications
+brew "cairo"                   # 2D graphics library
+brew "pango"                   # Text layout and rendering library
+brew "libpng"                  # PNG image library
+brew "jpeg"                    # JPEG image library
+brew "giflib"                  # GIF image library
+brew "librsvg"                 # SVG rendering library
+brew "pixman"                  # Low-level pixel manipulation library
+brew "fastfetch"               # System information tool
+brew "tmux"                    # Terminal multiplexer
+brew "tree"                    # Display directory structure as tree
+brew "watch"                   # Execute program periodically
+brew "zsh-autosuggestions"     # Fish-like autosuggestions for zsh
+brew "nvm"                     # Node Version Manager
+brew "glslang"                 # OpenGL/Vulkan shader compiler
 
-cask "vlc"
-cask "rar"
+# NEW additions
+brew "act"                     # NEW - Run GitHub Actions locally
+brew "cloudflared"             # NEW - Cloudflare tunnel client
+brew "ffmpeg"                  # NEW - Video/audio processing tool
+brew "lazygit"                 # NEW - Terminal UI for git
+brew "nginx"                   # NEW - HTTP and reverse proxy server
+brew "pnpm"                    # NEW - Fast, disk space efficient package manager
+brew "tree-sitter"             # NEW - Parser generator and incremental parsing library
+brew "yarn"                    # NEW - JavaScript package manager
+brew "yt-dlp"                  # NEW - Download videos from YouTube and other sites
+
+cask "vlc"                     # Media player
+cask "rar"                     # Archive manager
+
+# NEW casks
+cask "alacritty"               # NEW - GPU-accelerated terminal emulator
+cask "alt-tab"                 # NEW - Windows-style alt-tab for macOS
+cask "audacity"                # NEW - Audio editing software
+cask "bentobox"                # NEW - Window tiling/organizer
+cask "blackhole-2ch"           # NEW - Virtual audio driver (2 channels)
+cask "blackhole-16ch"          # NEW - Virtual audio driver (16 channels)
+cask "blackhole-64ch"          # NEW - Virtual audio driver (64 channels)
