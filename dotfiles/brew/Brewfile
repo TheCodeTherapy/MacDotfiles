@@ -45,3 +45,5 @@ cask "bentobox"                # Window tiling/organizer
 cask "blackhole-2ch"           # Virtual audio driver (2 channels)
 cask "blackhole-16ch"          # Virtual audio driver (16 channels)
 cask "blackhole-64ch"          # Virtual audio driver (64 channels)
+cask "ghostty"                 # Terminal emulator
+cask "hammerspoon"             # Automation tool for macOS
