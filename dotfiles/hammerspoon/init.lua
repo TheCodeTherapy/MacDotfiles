@@ -75,8 +75,10 @@ hs.hotkey.bind({"cmd"}, "return", function()
       app = hs.application.get("Ghostty")
       if app then
         positionWindow()
-        hs.eventtap.keyStrokes("clear && fastfetch && ll")
-        hs.eventtap.keyStroke({}, "return")
+        hs.timer.doAfter(0.5, function()
+          hs.eventtap.keyStrokes("clear && fastfetch && ll")
+          hs.eventtap.keyStroke({}, "return")
+        end)
       end
     end)
   end
