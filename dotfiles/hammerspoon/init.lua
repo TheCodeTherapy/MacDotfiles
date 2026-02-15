@@ -87,5 +87,5 @@ end)
 -- Launch urblind with PrintScreen (F13 on Mac keyboards)
 hs.hotkey.bind({}, "f13", function()
   local urblindPath = os.getenv("HOME") .. "/MacDotfiles/tools/urblind/build/urblind"
-  hs.task.new(urblindPath, nil):start()
+  hs.task.new(urblindPath, nil, {"--debug", "--debug-anchor", "br"}):start()
 end)
