@@ -7,9 +7,58 @@ install_homebrew() {
   if ! command -v brew &>/dev/null; then
     echo "Installing Homebrew..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+    echo >> /Users/marcogomez/.zprofile
+    echo 'eval "$(/opt/homebrew/bin/brew shellenv zsh)"' >> /Users/marcogomez/.zprofile
+    eval "$(/opt/homebrew/bin/brew shellenv zsh)"
   else
     echo "Homebrew is already installed... updating..."
     brew update
+  fi
+}
+
+install_rust() {
+  if ! command -v rustc &>/dev/null; then
+    echo "Installing Rust..."
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    source "$HOME/.cargo/env"
+  else
+    echo "Rust is already installed... updating..."
+    rustup update
+  fi
+}
+
+install_oh_my_zsh() {
+  if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    echo "Installing Oh My Zsh..."
+    RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  else
+    echo "Oh My Zsh is already installed."
+  fi
+}
+
+install_powerlevel10k() {
+  local theme_dir="$HOME/.oh-my-zsh/custom/themes/powerlevel10k"
+
+  if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    echo "Skipping Powerlevel10k installation because Oh My Zsh is not installed."
+    return
+  fi
+
+  mkdir -p "$HOME/.oh-my-zsh/custom/themes"
+
+  if [ ! -d "$theme_dir" ]; then
+    echo "Installing Powerlevel10k..."
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$theme_dir" || {
+      echo "Failed to install Powerlevel10k"
+      exit 1
+    }
+  else
+    echo "Powerlevel10k is already installed... updating..."
+    git -C "$theme_dir" pull --ff-only || {
+      echo "Failed to update Powerlevel10k"
+      exit 1
+    }
   fi
 }
 
@@ -31,6 +80,7 @@ link_file() {
   local source="$1"
   local destination="$2"
   echo "Linking $source to $destination ..."
+  mkdir -p "$(dirname "$destination")"
   rm -rf "$destination" >/dev/null 2>&1
   if ! ln -s "$source" "$destination"; then
     echo "Failed to link $source to $destination" >&2
@@ -149,3 +199,6 @@ fix_key_repeat
 link_dotfiles
 config_nginx
 install_urblind
+install_rust
+install_oh_my_zsh
+install_powerlevel10k
