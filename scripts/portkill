@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [ $# -ne 1 ]; then
+  echo "Usage: portkill <port>"
+  exit 1
+fi
+
+PORT="$1"
+
+if ! [[ "$PORT" =~ ^[0-9]+$ ]]; then
+  echo "Error: Port must be a number"
+  exit 1
+fi
+
+PIDS=$(lsof -ti :"$PORT" || true)
+
+if [ -z "$PIDS" ]; then
+  echo "No process is listening on port $PORT"
+  exit 0
+fi
+
+echo "Process(es) using port $PORT:"
+lsof -i :"$PORT"
+
+echo ""
+echo "Attempting graceful shutdown..."
+
+for PID in $PIDS; do
+  kill "$PID" 2>/dev/null || sudo kill "$PID" 2>/dev/null || true
+done
+
+sleep 1
+
+REMAINING=$(lsof -ti :"$PORT" || true)
+
+if [ -z "$REMAINING" ]; then
+  echo "Successfully terminated process(es) on port $PORT"
+  exit 0
+fi
+
+echo "Force killing remaining process(es)..."
+
+for PID in $REMAINING; do
+  kill -9 "$PID" 2>/dev/null || sudo kill -9 "$PID" 2>/dev/null || true
+done
+
+sleep 1
+
+FINAL_CHECK=$(lsof -ti :"$PORT" || true)
+
+if [ -z "$FINAL_CHECK" ]; then
+  echo "Port $PORT is now free"
+else
+  echo "Warning: Some process(es) may still be holding port $PORT"
+fi
