@@ -3,6 +3,59 @@
 DOTDIR="$HOME/MacDotfiles"
 DOTDOT="$DOTDIR/dotfiles"
 
+is_font_installed() {
+  local font_name="$1"
+  local font_dirs=(
+    "$HOME/Library/Fonts"
+    "/Library/Fonts"
+    "/System/Library/Fonts"
+    "/System/Library/AssetsV2/com_apple_MobileAsset_Font*"
+  )
+
+  local font_dir
+  for font_dir in "${font_dirs[@]}"; do
+    if find "$font_dir" -type f -iname "$font_name" -print -quit 2>/dev/null | grep -q .; then
+      return 0
+    fi
+  done
+
+  return 1
+}
+
+install_fonts() {
+  local source_dir="$DOTDIR/assets/fonts"
+  local target_dir="$HOME/Library/Fonts"
+  local installed_count=0
+  local skipped_count=0
+
+  if [ ! -d "$source_dir" ]; then
+    echo "No font assets directory found at $source_dir."
+    return
+  fi
+
+  mkdir -p "$target_dir"
+
+  while IFS= read -r -d '' font_path; do
+    local font_name
+    font_name="$(basename "$font_path")"
+
+    if is_font_installed "$font_name"; then
+      echo "Skipping installed font: $font_name"
+      skipped_count=$((skipped_count + 1))
+      continue
+    fi
+
+    echo "Installing font: $font_name"
+    cp "$font_path" "$target_dir/" || {
+      echo "Failed to install font: $font_name"
+      exit 1
+    }
+    installed_count=$((installed_count + 1))
+  done < <(find "$source_dir" -type f \( -iname '*.ttf' -o -iname '*.otf' -o -iname '*.ttc' -o -iname '*.otc' -o -iname '*.dfont' \) -print0)
+
+  echo "Font installation complete: installed $installed_count, skipped $skipped_count."
+}
+
 install_homebrew() {
   if ! command -v brew &>/dev/null; then
     echo "Installing Homebrew..."
@@ -194,6 +247,7 @@ install_urblind() {
 
 install_homebrew
 install_homebrew_packages
+install_fonts
 fix_dock
 fix_key_repeat
 link_dotfiles
