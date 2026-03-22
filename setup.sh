@@ -245,6 +245,30 @@ install_urblind() {
   }
 }
 
+install_recipes() {
+  local recipe_dir
+  local script_dir
+  script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  recipe_dir="${script_dir}/z_setup_scripts"
+
+  local recipes=(
+    "$recipe_dir/install_emscripten.sh"
+  )
+
+  for recipe in "${recipes[@]}"; do
+    if [ -f "$recipe" ]; then
+      echo "Running recipe: $(basename "$recipe")"
+      # shellcheck source=/dev/null
+      source "$recipe" || {
+        echo "Failed to execute recipe: $(basename "$recipe")" >&2
+        exit 1
+      }
+    else
+      echo "Recipe not found: $(basename "$recipe")" >&2
+    fi
+  done
+}
+
 install_homebrew
 install_homebrew_packages
 install_fonts
@@ -256,3 +280,4 @@ install_urblind
 install_rust
 install_oh_my_zsh
 install_powerlevel10k
+install_recipes

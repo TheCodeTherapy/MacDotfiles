@@ -1,2 +1,3 @@
 export PATH="$HOME/MacDotfiles/scripts:$HOME/MacDotfiles/bin:$PATH"
 eval "$(/opt/homebrew/bin/brew shellenv)"
+[ -f "$HOME/.emsdk/emsdk_env.sh" ] && . "$HOME/.emsdk/emsdk_env.sh" >/dev/null 2>&1
