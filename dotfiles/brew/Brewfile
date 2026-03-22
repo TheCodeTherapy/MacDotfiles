@@ -47,5 +47,7 @@ cask "blackhole-16ch"          # Virtual audio driver (16 channels)
 cask "blackhole-64ch"          # Virtual audio driver (64 channels)
 cask "ghostty"                 # Terminal emulator
 cask "hammerspoon"             # Automation tool for macOS
-cask "claude"                  # AI-assisted coding
+cask "claude"                  # Claude desktop app
+cask "claude-code"             # Claude Code CLI
 cask "gcloud-cli"              # Google Cloud CLI
+cask "transmission"            # BitTorrent client
