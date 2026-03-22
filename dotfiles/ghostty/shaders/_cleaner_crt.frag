@@ -1,4 +1,4 @@
-// #define CURVE 21.0, 17.0
+#define CURVE 21.0, 17.0
 #define BLOOM_INTENSITY 0.17
 
 // Radial bloom samples
