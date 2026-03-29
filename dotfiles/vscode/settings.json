@@ -6,6 +6,7 @@
 
   "workbench.startupEditor": "none",
   "workbench.iconTheme": "catppuccin-mocha",
+  "workbench.colorTheme": "Dark Modern",
 
   "window.titleBarStyle": "custom",
   "workbench.activityBar.location": "top",
