@@ -124,6 +124,10 @@ alias ll='eza -l --group-directories-first --icons --git --octal-permissions --t
 alias la='eza -la --group-directories-first --icons --git --octal-permissions --time-style=long-iso'
 alias l='eza -l --group-directories-first --icons --git --octal-permissions --time-style=long-iso'
 alias ls='eza --group-directories-first --grid --icons --git --octal-permissions --time-style=long-iso'
+alias www=`cd /opt/homebrew/var/www && pwd`
+
+# To start nginx now and restart at login:
+#   brew services start nginx
 
 alias claudecode="CLAUDE_CODE_USE_VERTEX=1 CLOUD_ML_REGION=global ANTHROPIC_VERTEX_PROJECT_ID=jointly-patient-glider ANTHROPIC_SMALL_FAST_MODEL='claude-haiku-4-5@20251001' claude"
 
