@@ -1,3 +1,5 @@
+tap "oven-sh/bun"              # Bun tap
+
 brew "wget"                    # Download files from the web
 brew "cmake"                   # Cross-platform build system
 brew "fd"                      # Fast alternative to find
@@ -23,6 +25,8 @@ brew "tree"                    # Display directory structure as tree
 brew "watch"                   # Execute program periodically
 brew "zsh-autosuggestions"     # Fish-like autosuggestions for zsh
 brew "nvm"                     # Node Version Manager
+brew "bun"                     # JavaScript runtime and package manager
+brew "deno"                    # JavaScript/TypeScript runtime
 brew "glslang"                 # OpenGL/Vulkan shader compiler
 
 brew "act"                     # Run GitHub Actions locally
