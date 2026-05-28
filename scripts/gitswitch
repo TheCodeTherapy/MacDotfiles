@@ -1,8 +1,9 @@
 #!/bin/bash
 # Define the menu options
 options=(
-    1 "Personal Credentials"
-    2 "Improbable Credentials"
+    1 "Marco Gomez Credentials"
+    2 "TheCodeTherapy Credentials"
+    3 "TheCodeTherapy Improbable Credentials"
 )
 
 # Show the menu and get the user's choice
@@ -18,20 +19,44 @@ choice=$(dialog --clear \
 case $choice in
     1)
     clear
-    echo "Switching to Personal Git Credentials..."
-    cp ~/.ssh/personal_id_rsa ~/.ssh/id_rsa
-    cp ~/.ssh/personal_id_rsa.pub ~/.ssh/id_rsa.pub
+    echo "Switching to Marco Gomez Git Credentials..."
+    rm -f ~/.ssh/id_rsa ~/.ssh/id_rsa.pub
+    cp ~/.ssh/marco_gomez_id_ed25519 ~/.ssh/id_ed25519
+    cp ~/.ssh/marco_gomez_id_ed25519.pub ~/.ssh/id_ed25519.pub
+    git config --global commit.gpgsign true
+    git config --global gpg.format ssh
+    git config --global user.signingkey ~/.ssh/id_ed25519.pub
+    git config --global user.name "Marco Gomez"
+    git config --global user.email "marcogomez@mgz.me"
     echo "Done!"
     ;;
     2)
     clear
-    echo "Switching to Improbable Git Credentials..."
+    echo "Switching to TheCodeTherapy Git Credentials..."
+    rm -f ~/.ssh/id_ed25519 ~/.ssh/id_ed25519.pub
+    cp ~/.ssh/thecodetherapy_id_rsa ~/.ssh/id_rsa
+    cp ~/.ssh/thecodetherapy_id_rsa.pub ~/.ssh/id_rsa.pub
+    git config --global commit.gpgsign true
+    git config --global gpg.format ssh
+    git config --global user.signingkey ~/.ssh/id_rsa.pub
+    git config --global user.name "TheCodeTherapy"
+    git config --global user.email "me@mgz.me"
+    echo "Done!"
+    ;;
+    3)
+    clear
+    echo "Switching to TheCodeTherapy Improbable Git Credentials..."
+    rm -f ~/.ssh/id_ed25519 ~/.ssh/id_ed25519.pub
     cp ~/.ssh/improbable_id_rsa ~/.ssh/id_rsa
     cp ~/.ssh/improbable_id_rsa.pub ~/.ssh/id_rsa.pub
+    git config --global commit.gpgsign true
+    git config --global gpg.format ssh
+    git config --global user.signingkey ~/.ssh/id_rsa.pub
+    git config --global user.name "TheCodeTherapy"
+    git config --global user.email "me@mgz.me"
     echo "Done!"
     ;;
     *)
     clear
     ;;
 esac
-
