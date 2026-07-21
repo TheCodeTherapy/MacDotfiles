@@ -130,7 +130,6 @@ alias www=`cd /opt/homebrew/var/www && pwd`
 # To start nginx now and restart at login:
 #   brew services start nginx
 
-alias claudecode="CLAUDE_CODE_USE_VERTEX=1 CLOUD_ML_REGION=global ANTHROPIC_VERTEX_PROJECT_ID=jointly-patient-glider ANTHROPIC_SMALL_FAST_MODEL='claude-haiku-4-5@20251001' claude"
 alias ccode="claude"
 
 export PATH=/opt/homebrew/share/google-cloud-sdk/bin:"$PATH"

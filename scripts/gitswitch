@@ -3,7 +3,6 @@
 options=(
     1 "Marco Gomez Credentials"
     2 "TheCodeTherapy Credentials"
-    3 "TheCodeTherapy Improbable Credentials"
 )
 
 # Show the menu and get the user's choice
@@ -11,7 +10,7 @@ choice=$(dialog --clear \
                 --backtitle "Switch Git Credentials" \
                 --title "Git Credentials Selection" \
                 --menu "Choose an option:" \
-                15 40 4 \
+                15 40 2 \
                 "${options[@]}" \
                 2>&1 >/dev/tty)
 
@@ -36,19 +35,6 @@ case $choice in
     rm -f ~/.ssh/id_ed25519 ~/.ssh/id_ed25519.pub
     cp ~/.ssh/thecodetherapy_id_rsa ~/.ssh/id_rsa
     cp ~/.ssh/thecodetherapy_id_rsa.pub ~/.ssh/id_rsa.pub
-    git config --global commit.gpgsign true
-    git config --global gpg.format ssh
-    git config --global user.signingkey ~/.ssh/id_rsa.pub
-    git config --global user.name "TheCodeTherapy"
-    git config --global user.email "me@mgz.me"
-    echo "Done!"
-    ;;
-    3)
-    clear
-    echo "Switching to TheCodeTherapy Improbable Git Credentials..."
-    rm -f ~/.ssh/id_ed25519 ~/.ssh/id_ed25519.pub
-    cp ~/.ssh/improbable_id_rsa ~/.ssh/id_rsa
-    cp ~/.ssh/improbable_id_rsa.pub ~/.ssh/id_rsa.pub
     git config --global commit.gpgsign true
     git config --global gpg.format ssh
     git config --global user.signingkey ~/.ssh/id_rsa.pub

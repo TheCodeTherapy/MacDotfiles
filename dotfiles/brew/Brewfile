@@ -39,6 +39,9 @@ brew "tree-sitter"             # Parser generator and incremental parsing librar
 brew "yarn"                    # JavaScript package manager
 brew "yt-dlp"                  # Download videos from YouTube and other sites
 
+cask "chromium"                # Web browser
+cask "firefox"                 # Web browser
+
 cask "vlc"                     # Media player
 cask "rar"                     # Archive manager
 
