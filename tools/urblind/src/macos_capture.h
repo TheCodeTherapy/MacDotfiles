@@ -14,7 +14,9 @@ typedef struct {
     int height;
 } MacOSScreenCapture;
 
-MacOSScreenCapture capture_screen_macos(void);
+MacOSScreenCapture capture_screen_macos(int x, int y, int width, int height);
+
+int get_mouse_position_macos(int* x, int* y);
 
 #ifdef __cplusplus
 }

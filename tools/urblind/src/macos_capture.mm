@@ -6,7 +6,17 @@
 #import <ScreenCaptureKit/ScreenCaptureKit.h>
 #include <iostream>
 
-MacOSScreenCapture capture_screen_macos(void) {
+int get_mouse_position_macos(int* x, int* y) {
+  CGEventRef event = CGEventCreate(NULL);
+  if (!event) return 0;
+  CGPoint point = CGEventGetLocation(event);
+  CFRelease(event);
+  *x = (int)point.x;
+  *y = (int)point.y;
+  return 1;
+}
+
+MacOSScreenCapture capture_screen_macos(int x, int y, int width, int height) {
   MacOSScreenCapture result = {nullptr, 0, 0};
 
   // ScreenCaptureKit requires macOS 12.3+
@@ -28,13 +38,34 @@ MacOSScreenCapture capture_screen_macos(void) {
         return;
       }
 
-      // Capture all displays
-      SCContentFilter *filter = [[SCContentFilter alloc] initWithDisplay:content.displays.firstObject
-                                                        excludingWindows:@[]];
+      SCDisplay *targetDisplay = nil;
+      for (SCDisplay *display in content.displays) {
+        CGRect bounds = CGDisplayBounds(display.displayID);
+        if ((int)bounds.origin.x == x && (int)bounds.origin.y == y) {
+          targetDisplay = display;
+          break;
+        }
+      }
+      if (!targetDisplay) {
+        std::cerr << "No display found at (" << x << ", " << y << "), falling back to the first display."
+                  << std::endl;
+        targetDisplay = content.displays.firstObject;
+      }
+
+      SCContentFilter *filter = [[SCContentFilter alloc] initWithDisplay:targetDisplay excludingWindows:@[]];
+
+      size_t pixelWidth = (size_t)width;
+      size_t pixelHeight = (size_t)height;
+      CGDisplayModeRef mode = CGDisplayCopyDisplayMode(targetDisplay.displayID);
+      if (mode) {
+        pixelWidth = CGDisplayModeGetPixelWidth(mode);
+        pixelHeight = CGDisplayModeGetPixelHeight(mode);
+        CGDisplayModeRelease(mode);
+      }
 
       SCStreamConfiguration *config = [[SCStreamConfiguration alloc] init];
-      config.width = content.displays.firstObject.width;
-      config.height = content.displays.firstObject.height;
+      config.width = pixelWidth;
+      config.height = pixelHeight;
       config.pixelFormat = kCVPixelFormatType_32BGRA;
       config.showsCursor = NO;
 

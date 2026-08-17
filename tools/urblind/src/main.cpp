@@ -125,7 +125,7 @@ class MonitorState {
  * └──────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
  */
 Image CaptureScreenMacOS(int x, int y, int width, int height) {
-  MacOSScreenCapture capture = capture_screen_macos();
+  MacOSScreenCapture capture = capture_screen_macos(x, y, width, height);
   
   if (!capture.data) {
     std::cerr << "Failed to capture screen on macOS!" << std::endl;
@@ -186,7 +186,41 @@ Image CaptureScreenX11(int x, int y, int width, int height) {
   XDestroyImage(img);  // Free X11 image memory
   return screenshot;
 }
+
+int GetGlobalMousePositionX11(int* x, int* y) {
+  Display* display = XOpenDisplay(nullptr);
+  if (!display) return 0;
+  Window rootReturn, childReturn;
+  int rootX, rootY, winX, winY;
+  unsigned int mask;
+  Bool ok = XQueryPointer(display, DefaultRootWindow(display), &rootReturn, &childReturn, &rootX, &rootY, &winX, &winY,
+                          &mask);
+  XCloseDisplay(display);
+  if (!ok) return 0;
+  *x = rootX;
+  *y = rootY;
+  return 1;
+}
 #endif
+
+int GetMonitorUnderCursor() {
+  int cursorX = 0;
+  int cursorY = 0;
+#ifdef __APPLE__
+  if (!get_mouse_position_macos(&cursorX, &cursorY)) return 0;
+#else
+  if (!GetGlobalMousePositionX11(&cursorX, &cursorY)) return 0;
+#endif
+  for (int i = 0; i < GetMonitorCount(); i++) {
+    Vector2 position = GetMonitorPosition(i);
+    if (cursorX >= position.x && cursorX < position.x + GetMonitorWidth(i) && cursorY >= position.y &&
+        cursorY < position.y + GetMonitorHeight(i)) {
+      std::cout << "Cursor at (" << cursorX << ", " << cursorY << ") is on monitor " << i << "\n";
+      return i;
+    }
+  }
+  return 0;
+}
 
 /**
  * ┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -505,7 +539,7 @@ int main(int argc, char* argv[]) {
                 << "  --debug                       Enable debug panel." << std::endl
                 << "  --debug-anchor {tl|tr|bl|br}  Set debug panel anchor position." << std::endl;
       std::cout << std::endl;
-      std::cout << "If no monitor index is provided, monitor 0 is used by default.\n" << std::endl;
+      std::cout << "If no monitor index is provided, the monitor under the mouse cursor is used.\n" << std::endl;
       DrawMonitorLayout(monitorState);
       return 0;
     }
@@ -531,9 +565,9 @@ int main(int argc, char* argv[]) {
   if (debugMode) debugPanel.SetVisible(true);
   if (debugAnchor) debugPanel.SetAnchor(*debugAnchor);
 
-  // Default to monitor 0 if no valid selection is made
+  // Default to the monitor under the mouse cursor if no valid selection is made
   if (selectedMonitor == -1) {
-    selectedMonitor = 0;
+    selectedMonitor = GetMonitorUnderCursor();
   } else {
     selectedMonitor = monitorState.getRealMonitorIndex(selectedMonitor);
     if (selectedMonitor == -1) {
@@ -547,16 +581,19 @@ int main(int argc, char* argv[]) {
 
   SetWindowSize(screenWidth, screenHeight);
 
+#ifdef __APPLE__
+  Vector2 monitorPosition = GetMonitorPosition(selectedMonitor);
+  Image screenshot = CaptureScreenMacOS(static_cast<int>(monitorPosition.x), static_cast<int>(monitorPosition.y),
+                                        screenWidth, screenHeight);
+  if (screenshot.data != nullptr && screenshot.width > 0) {
+    zoom = static_cast<float>(screenWidth) / static_cast<float>(screenshot.width);
+    targetZoom = zoom;
+  }
+#else
   pan.x = GetMonitorPosition(selectedMonitor).x;
   pan.y = GetMonitorPosition(selectedMonitor).y;
   targetPan.x = pan.x;
   targetPan.y = pan.y;
-  Rectangle source = {pan.x, pan.y, screenWidth / zoom, screenHeight / zoom};
-  Rectangle dest = {0, 0, static_cast<float>(screenWidth), static_cast<float>(screenHeight)};
-
-#ifdef __APPLE__
-  Image screenshot = CaptureScreenMacOS(0, 0, monitorState.totalWidth, monitorState.totalHeight);
-#else
   Image screenshot = CaptureScreenX11(0, 0, monitorState.totalWidth, monitorState.totalHeight);
 #endif
   ClearWindowState(FLAG_WINDOW_HIDDEN);

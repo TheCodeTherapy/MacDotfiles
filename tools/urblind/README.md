@@ -47,7 +47,7 @@ The built binary will be at `./build/urblind`.
 ```sh
 urblind [monitor_index] [OPTIONS]
 ```
-- If no monitor index is provided, the **rightmost monitor** will be used by default.
+- If no monitor index is provided, the **monitor under the mouse cursor** will be used by default.
 
 <br />
 
@@ -62,7 +62,7 @@ urblind [monitor_index] [OPTIONS]
 
 ### 📌 **Usage Examples**
 
-#### Start using the **default (rightmost) monitor**:
+#### Start using the **default monitor (the one under the mouse cursor)**:
 ```sh
 urblind
 ```
